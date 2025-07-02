@@ -1,0 +1,16 @@
+{
+  "github.copilot.chat.codeGeneration.instructions": [
+        {
+            "file": "docs/spec.md"
+        },
+        {
+            "file": "docs/python-style.md"
+        },
+        {
+            "file": "docs/database-style.md"
+        },
+        {
+            "file": "docs/test-style.md"
+        }
+    ]
+}
