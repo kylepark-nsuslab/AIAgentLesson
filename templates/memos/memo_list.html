@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="mx-auto" style="max-width:700px;">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">내 메모 목록</h2>
+    <a href="{% url 'memo_create' %}" class="btn btn-success">+ 새 메모</a>
+  </div>
+  {% if memos %}
+    <div class="list-group shadow-sm">
+      {% for memo in memos %}
+        <a href="{% url 'memo_detail' memo.pk %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="fw-semibold">{{ memo.title }}</span>
+          <span class="text-muted small">{{ memo.created_at|date:"Y-m-d H:i" }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">작성한 메모가 없습니다.</div>
+  {% endif %}
+</div>
+{% endblock %}
