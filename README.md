@@ -89,22 +89,34 @@ pip install django-crispy-forms
 pip install crispy-bootstrap5
 ```
 
-### 4. 데이터베이스 마이그레이션
+### 4. 환경 설정 (프로덕션용)
+```bash
+# .env.example 파일을 .env로 복사
+cp .env.example .env
+
+# .env 파일을 편집하여 프로덕션 환경에 맞게 수정
+# - SECRET_KEY: 복잡한 랜덤 문자열로 변경
+# - DEBUG: False로 설정
+# - ALLOWED_HOSTS: 실제 도메인으로 변경
+# - USE_HTTPS: HTTPS 환경에서 True로 설정
+```
+
+### 5. 데이터베이스 마이그레이션
 ```bash
 python manage.py migrate
 ```
 
-### 5. 관리자 계정 생성 (선택)
+### 6. 관리자 계정 생성 (선택)
 ```bash
 python manage.py createsuperuser
 ```
 
-### 6. 개발 서버 실행
+### 7. 개발 서버 실행
 ```bash
 python manage.py runserver
 ```
 
-### 7. 브라우저에서 접속
+### 8. 브라우저에서 접속
 ```
 http://localhost:8000
 ```
@@ -175,10 +187,33 @@ http://localhost:8000
 
 ## 🔒 보안 고려사항
 
+### 인증 및 권한 제어
 - 사용자 인증을 통한 메모 접근 제어
 - CSRF 토큰을 활용한 폼 보안
 - 사용자별 메모 격리 (다른 사용자의 메모 접근 불가)
-- Django 기본 보안 설정 적용
+- `@login_required` 데코레이터로 인증 필수 페이지 보호
+
+### 패스워드 보안
+- 최소 8자 이상의 패스워드 요구
+- 일반적인 패스워드 금지
+- 사용자 정보와 유사한 패스워드 금지
+- 숫자로만 구성된 패스워드 금지
+
+### 환경별 보안 설정
+- **개발 환경**: 기본 보안 설정 적용
+- **프로덕션 환경**: 강화된 보안 설정
+  - 환경변수 기반 SECRET_KEY 설정
+  - DEBUG 모드 비활성화
+  - HTTPS 강제 리다이렉트 (HTTPS 환경에서)
+  - HSTS(HTTP Strict Transport Security) 적용
+  - 보안 쿠키 설정 (Secure, HttpOnly, SameSite)
+  - XSS 및 클릭재킹 방지 헤더
+
+### 보안 헤더
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: DENY`
+- `X-XSS-Protection: 1; mode=block`
+- Content Security Policy 적용 권장
 
 ## 🚀 배포 가이드
 
