@@ -11,7 +11,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('login')
+            return redirect('memo_list')  # 로그인 후 메모 목록으로 리다이렉트
     else:
         form = SignUpForm()
     return render(request, "registration/signup.html", {"form": form})
